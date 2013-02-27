@@ -8,11 +8,13 @@ import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
 
 public class RemoteActivity extends Activity {
 
+	protected static final String TAG = "RemoteActivity";
 	private DoubleTouchView doubleTouchView;
 	private JoystickView joystickView;
 	private SpeedControlView speedControlView;
@@ -69,6 +71,7 @@ public class RemoteActivity extends Activity {
 			
 			@Override
 			public void onDirectionChanged(JoystickDirection joystickDirection) {
+				Log.d(TAG, "direction changed: "+joystickDirection);
 				remote.changeDirection(joystickDirection);
 			}
 		});
@@ -76,6 +79,7 @@ public class RemoteActivity extends Activity {
 			
 			@Override
 			public void onSpeedChanged(int speed) {
+				Log.d(TAG, "speed changed: "+speed);
 				remote.changeSpeed(speed);
 			}
 		});

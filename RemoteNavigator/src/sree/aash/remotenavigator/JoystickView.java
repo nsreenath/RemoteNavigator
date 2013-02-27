@@ -26,6 +26,7 @@ public class JoystickView extends View {
 	private float touchY = 0;
 	private float drawX = 0;
 	private float drawY = 0;
+	private float handleSize = 0.5f;
 
 	private float threshold = 0.6f;
 
@@ -41,13 +42,14 @@ public class JoystickView extends View {
 		Resources res = getResources();
 		joystickHandle = BitmapFactory.decodeResource(res,
 				R.drawable.joystick_handle);
-		joystickHandle = Bitmap
-				.createScaledBitmap(joystickHandle, 50, 50, true);
 	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
+		int size = (int) (getWidth() * handleSize);
+		joystickHandle = Bitmap
+				.createScaledBitmap(joystickHandle, size, size, true);
 		placeHandleAtCenter();
 	}
 
