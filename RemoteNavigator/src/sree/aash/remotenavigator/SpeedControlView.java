@@ -24,7 +24,8 @@ public class SpeedControlView extends View {
 //	private Bitmap speedcontrolTrack;
 	private static float SCREEN_DENSITY;
 	private int trackWidthInDip = 10;
-	private int handleSizeInDip = 50;
+	private int handleWidthInDip = 50;
+	private int handleHeightInDip = 20;
 	
 	private float touchX = 0;
 	private float touchY = 0;
@@ -45,23 +46,20 @@ public class SpeedControlView extends View {
 		Resources res = getResources();
 		speedcontrolHandle = BitmapFactory.decodeResource(res, R.drawable.speedcontrol_handle);
 		SCREEN_DENSITY = getContext().getResources().getDisplayMetrics().density;
-		int handleSize = (int) (handleSizeInDip * SCREEN_DENSITY);
-		speedcontrolHandle = Bitmap.createScaledBitmap(speedcontrolHandle, handleSize, handleSize, true);
+		setBackgroundResource(R.drawable.speedcontrol_track);
 	}
 	
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
+		int handleWidth = w;
+		int handleHeight = (int) (handleHeightInDip * SCREEN_DENSITY);
+		speedcontrolHandle = Bitmap.createScaledBitmap(speedcontrolHandle, handleWidth, handleHeight, true);
 		placeHandleAtBottom();
 	}
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
-		Paint paint = new Paint();
-		paint.setARGB(50, 100, 100, 100);
-		int centerX = getWidth()/2;
-		int trackWidth = (int) (SCREEN_DENSITY * trackWidthInDip);
-		canvas.drawRect(centerX-trackWidth/2, 0, centerX+trackWidth/2, getHeight(), paint);
 		canvas.drawBitmap(speedcontrolHandle, drawX, drawY, null);
 	}
 

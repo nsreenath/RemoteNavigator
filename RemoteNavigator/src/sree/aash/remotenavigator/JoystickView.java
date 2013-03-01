@@ -22,6 +22,7 @@ public class JoystickView extends View {
 	private int activePointer = INVALID_POINTER_ID;
 
 	private Bitmap joystickHandle;
+	private Bitmap joystickTrack;
 	private float touchX = 0;
 	private float touchY = 0;
 	private float drawX = 0;
@@ -42,6 +43,9 @@ public class JoystickView extends View {
 		Resources res = getResources();
 		joystickHandle = BitmapFactory.decodeResource(res,
 				R.drawable.joystick_handle);
+//		joystickTrack = BitmapFactory.decodeResource(res,
+//				R.drawable.joystick_track);
+		setBackgroundResource(R.drawable.joystick_track);
 	}
 
 	@Override
@@ -59,8 +63,6 @@ public class JoystickView extends View {
 		paint.setAntiAlias(true);
 		paint.setARGB(50, 100, 100, 100);
 		canvas.drawCircle(getWidth()/2, getHeight()/2, getWidth()/2, paint);
-//		Paint handlePaint = new Paint();
-//		handlePaint.setAntiAlias(true);
 		canvas.drawBitmap(joystickHandle, drawX, drawY, null);
 	}
 
