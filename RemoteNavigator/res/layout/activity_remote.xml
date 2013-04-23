@@ -4,12 +4,21 @@
     android:layout_height="match_parent"
     tools:context=".RemoteActivity" >
 
-    <sree.aash.remotenavigator.DoubleTouchView
-        android:id="@+id/doubleTouchView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" >
-    </sree.aash.remotenavigator.DoubleTouchView>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <de.mjpegsample.MjpegView.MjpegView
+            android:id="@+id/cameraView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <sree.aash.remotenavigator.DoubleTouchView
+            android:id="@+id/doubleTouchView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </sree.aash.remotenavigator.DoubleTouchView>
+
+    </FrameLayout>
 
 </RelativeLayout>

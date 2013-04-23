@@ -1,6 +1,8 @@
 package sree.aash.remotenavigator;
 
 
+import de.mjpegsample.MjpegView.MjpegInputStream;
+import de.mjpegsample.MjpegView.MjpegView;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -18,10 +20,12 @@ public class RemoteActivity extends Activity {
 	private DoubleTouchView doubleTouchView;
 	private JoystickView joystickView;
 	private SpeedControlView speedControlView;
+	private MjpegView cameraView;
 	private Remote remote;
 	
-	ProgressDialog progressDialog;
+	private ProgressDialog progressDialog;
 	protected String serverAddress;
+	protected int cameraPort = 8089;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +43,7 @@ public class RemoteActivity extends Activity {
 			
 			@Override
 			public void onCancel(DialogInterface dialog) {
-//				finish();
+				finish();
 			}
 		});
 		final Handler handler = new Handler() {
@@ -56,7 +60,7 @@ public class RemoteActivity extends Activity {
 					remote.connectToServer(serverAddress);
 					handler.sendEmptyMessage(0);
 				} catch (Exception e) {
-					
+					Log.d(TAG, "Could not connect to server\n"+e);
 				}
 			}
 		});
@@ -83,6 +87,9 @@ public class RemoteActivity extends Activity {
 				remote.changeSpeed(speed);
 			}
 		});
+		cameraView = (MjpegView) findViewById(R.id.cameraView);
+		String cameraUrl = "http://"+serverAddress+":"+cameraPort;
+		cameraView.setSource(MjpegInputStream.read(cameraUrl));
 	}
 	
 	public void showToast(CharSequence msg) {
@@ -90,7 +97,14 @@ public class RemoteActivity extends Activity {
 	}
 	
 	@Override
+	protected void onPause() {
+		super.onPause();
+		finish();
+	}
+	
+	@Override
 	public void finish() {
+		cameraView.stopPlayback();
 		remote.disconnectFromServer();
 		super.finish();
 	}
